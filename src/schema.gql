@@ -9,11 +9,12 @@ type Post {
 }
 
 type Query {
-  posts: [Post!]!
+  getAll: [Post!]!
+  getPostById(idPost: String!): Post!
 }
 
 type Mutation {
-  createPost(postDto: CreatePostDto!): Post!
+  create(postDto: CreatePostDto!): Post!
 }
 
 input CreatePostDto {

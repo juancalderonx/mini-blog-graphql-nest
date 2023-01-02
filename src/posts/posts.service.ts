@@ -19,6 +19,11 @@ export class PostsService {
     return await this.postService.find();
   }
 
+  async findOneById(id: string): Promise<Post> {
+    this.logger.log(`Returning one post by ${id} ID.`);
+    return this.postService.findOneBy({id: id});
+  }
+
   createPost(post: CreatePostDto): Promise<Post> {
     this.logger.log(`Returning post created.`);
     const newPost = this.postService.create(post);

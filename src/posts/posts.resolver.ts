@@ -12,13 +12,23 @@ export class PostsResolver {
   constructor(private readonly postsService: PostsService) {}
 
   @Query(() => [Post])
-  posts() {
+  getAll() {
     this.logger.log(`Trying send petition to get all posts.`);
     return this.postsService.findAll();
   }
 
+  @Query(() => Post)
+  getPostById(
+    @Args('idPost', {
+      type: () => String
+    }) idPost: string,
+  ) {
+    this.logger.log(`Trying send petition to get post by ID.`);
+    return this.postsService.findOneById(idPost);
+  }
+
   @Mutation(() => Post)
-  createPost(
+  create(
     @Args('postDto') postDto: CreatePostDto,
   ) {
     this.logger.log(`Trying send DTO Post to PostService.`);

@@ -1,5 +1,6 @@
 import { ObjectType, Field } from "@nestjs/graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Author } from "../../authors/entities/author.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @ObjectType() @Entity()
 export class Post {
@@ -15,4 +16,12 @@ export class Post {
   @Column()
   @Field({ nullable: true })
   content?: string;
+
+  @Column()
+  @Field()
+  authorId: string;
+
+  @ManyToOne( () => Author, author => author.posts )
+  @Field( () => Author, { nullable: true } )
+  author: Author;
 }

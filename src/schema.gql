@@ -2,22 +2,39 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Author {
+  id: String!
+  fullname: String!
+  posts: [Post!]
+}
+
 type Post {
   id: String!
   title: String!
   content: String
+  authorId: String!
+  author: Author
+  authorData: Author!
 }
 
 type Query {
   getAll: [Post!]!
   getPostById(idPost: String!): Post!
+  findAllAuthors: [Author!]!
+  findOneAuthor(id: String!): Author!
 }
 
 type Mutation {
   create(postDto: CreatePostDto!): Post!
+  createAuthor(createAuthorInput: CreateAuthorInput!): Author!
 }
 
 input CreatePostDto {
   title: String!
   content: String
+  authorId: String
+}
+
+input CreateAuthorInput {
+  fullname: String!
 }

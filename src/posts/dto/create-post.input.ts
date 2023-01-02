@@ -10,6 +10,10 @@ export class CreatePostDto {
 
   @Field({ nullable: true })
   @IsString() @IsOptional() @MaxLength(100)
-  content?: string;
+  content: string;
+
+  @IsString()
+  @Field({ nullable: true })
+  authorId: string;
 
 }

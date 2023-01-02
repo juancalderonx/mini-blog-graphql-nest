@@ -1,10 +1,11 @@
 import { Logger } from '@nestjs/common';
-import { Mutation, Query, Resolver, Args } from '@nestjs/graphql';
-import { CreatePostDto } from './dto/create-post.dto';
+import { Mutation, Query, Resolver, Args, ResolveField, Parent } from '@nestjs/graphql';
+import { Author } from '../authors/entities/author.entity';
+import { CreatePostDto } from './dto/create-post.input';
 import { Post } from './entities/post.entity';
 import { PostsService } from './posts.service';
 
-@Resolver()
+@Resolver((of) => Post)
 export class PostsResolver {
 
   private readonly logger = new Logger(PostsResolver.name);
@@ -33,6 +34,11 @@ export class PostsResolver {
   ) {
     this.logger.log(`Trying send DTO Post to PostService.`);
     return this.postsService.createPost(postDto);
+  }
+
+  @ResolveField(() => Author)
+  authorData(@Parent() post: Post ): Promise<Author> {
+    return this.postsService.getAuthor(post.authorId);
   }
 
 }

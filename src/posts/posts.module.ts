@@ -3,10 +3,13 @@ import { PostsService } from './posts.service';
 import { PostsResolver } from './posts.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
+import { AuthorsModule } from '../authors/authors.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Post])
+    TypeOrmModule.forFeature([Post]),
+
+    AuthorsModule
   ],
 
   providers: [PostsResolver, PostsService]

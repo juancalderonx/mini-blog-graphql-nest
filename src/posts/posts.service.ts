@@ -1,8 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Author } from '../authors/entities/author.entity';
 import { Repository } from 'typeorm';
-import { CreatePostDto } from './dto/create-post.dto';
+import { CreatePostDto } from './dto/create-post.input';
 import { Post } from './entities/post.entity';
+import { AuthorsService } from '../authors/authors.service';
 
 @Injectable()
 export class PostsService {
@@ -12,6 +14,8 @@ export class PostsService {
   constructor(
     @InjectRepository(Post)
     private readonly postService: Repository<Post>,
+    
+    private readonly authorService: AuthorsService
   ){}
 
   async findAll(): Promise<Post[]> {
@@ -28,6 +32,10 @@ export class PostsService {
     this.logger.log(`Returning post created.`);
     const newPost = this.postService.create(post);
     return this.postService.save(newPost);
+  }
+
+  getAuthor( authorId: string ): Promise<Author> {
+    return this.authorService.findOne(authorId);
   }
 
 }
